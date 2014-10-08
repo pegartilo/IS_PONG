@@ -23,7 +23,7 @@ const int PLAYER_2_UPLEFT_EDGE_X = 74;
 const int BALL_WIDTH = 2;
 const int BALL_HEIGHT = 2;
 const int BALL_START_UPLEFT_EDGE_X = 30;
-const int BALL_START_UPLEFT_EDGE_X = 15;
+const int BALL_START_UPLEFT_EDGE_Y = 15;
 
 //COURT measures
 const int COURT_HEIGHT = 40;
@@ -38,12 +38,12 @@ const int NET_PIECE_HEIGHT = 5;
 //------------------
 //DATA TYPES
 //------------------
-typedef enum tPixel{
-	ball,
-	bat,
-	net,
-	empty,
-}
+typedef enum {
+	Ball,
+	Bat,
+	Net,
+	Empty
+}tPixel;
 
 typedef tPixel tBoard [COURT_WIDTH][COURT_HEIGHT];
 
