@@ -68,5 +68,7 @@ updateCourt(tCourt &court, tPlayerPosition newPlayer1Position, tPlayerPosition n
 tBallPosition getCurrentBallPosition(const tCourt court);
 tPlayerPosition getCurrentPlayerPosition(const tCourt court);
 
+//Checks wether the ball has collided with a player, and returns the part
+void ballCollided(bool &collided, int &part);
 
 #endif
