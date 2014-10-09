@@ -20,16 +20,32 @@ tCourt initializeCourt() {
 }
 
 //Updates the court with new information from the ball
-void updateCourt(tCourt &court, const tPlayers &players, const tBall &ball) {
-	emptyCourt(court);
+void updateCourt(tCourt &court) {
 
-	
+	//Collision-checking
+	bool ballCollidedPlayer = false;
+	bool ballCollidedWall = false;
+	int player_part_collided = -1;
+
+	ballCollidedPlayer(ballCollidedPlayer, player_part_collided);
+	ballCollidedWall(ballCollidedWall);
+
+	//Update positions of stuff calling their functions	
+	updateBall(court.ball, ballCollidedPlayer, player_part_collided, ballCollidedWall);
+	movePlayers(court.players);
+
+	//Place Stuff
+	emptyCourt(court);
+	placePlayers(court, PLAYER_1_UPLEFT_EDGE_X, court.players.player1Position, PLAYER_2_UPLEFT_EDGE_X, court.players.player2Position);
+	placeBall(court, court.ball.position.x, court.ball.position.y);
+	placeNet(court, NET_LEFTMOST_X);
 }
 
 //Checks wether the ball has collided with a player, and returns the part
-void ballCollided(bool &collided, int &part) {
+void ballCollidedPlayer(bool &collided, int &part) {
 	collided = false;
 }
+void ballCollidedWall(bool &collided);
 
 //Methods so that Ball and PLayer can kno their positions
 tBall getCurrentBallPosition(const tCourt court);
@@ -83,4 +99,3 @@ void emptyCourt(tCourt &court){
 		}
 	}
 }
-

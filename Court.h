@@ -53,7 +53,7 @@ typedef tPixel tBoard [COURT_WIDTH][COURT_HEIGHT];
 typedef struct {
 	tBoard board;
 	tPlayers players;	
-	tBall
+	tBall ball
 } tCourt;
 
 //------------------
@@ -61,6 +61,8 @@ typedef struct {
 //------------------
 
 /** FOR INTERFACE */
+//Updates the court after calling the update functions on each component
+updateCourt(tCourt &court);
 
 //Methods so that Ball and PLayer can kno their positions
 tBallPosition getCurrentBallPosition(const tCourt court);
@@ -68,6 +70,7 @@ tPlayerPosition getCurrentPlayerPosition(const tCourt court);
 
 //Checks wether the ball has collided with a player, and returns the part
 void ballCollided(bool &collided, int &part);
+void ballCollidedWall(bool &collided);
 
 
 /** INTERNAL FUNCTIONS*/
@@ -75,8 +78,7 @@ void ballCollided(bool &collided, int &part);
 //Initializes court with starting positions of players, ball and all that
 tCourt initializeCourt();
 
-//Updates the court with new information from the ball
-updateCourt(tCourt &court, const tPlayers &players, tBallPosition newBallPosition);
+
 
 //Delete the players and the ball from the array
 void deletePlayersAndBall(tCourt &court);
