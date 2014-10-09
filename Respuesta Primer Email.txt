@@ -1,0 +1,22 @@
+Hi Borja,
+
+Thanks for sending me your drafts. I apologise for not replying earlier.
+
+Your drafts are a good start. 
+
+Some comments:
+
+1)  You are missing the document on planning. By not attempting to do this, you are missing out on some valuable feedback for the other two. 
+
+1.a:  You requirements document is not structured in such a way as to allow you to refer to its contents during planning. You should try to specify what you want to do in terms of small units that can be developed and tested independently of the rest, so that you can assign each one of those to a particular time frame. 
+
+1.b: Your risks documents mentions several things that should be accounted for in the planning document: a schedule, a mid-project inspection, periodical meetings, distribution of the workload, pairs of participants that are to work together, timing for the review  of the requirements document, timing for the testing, handing in date...
+
+2) Your risks document also mentios a glossary that is not present in your requirements document.
+
+3) Your requirements document could be improved if you found a way of representing thje actual dynamics of the application over time as perceived by the user. This is sometimes difficult to combine with point 1.a above but it should be attempted. We will try to address this in class tomorrow.
+
+Good try. But I do feel you could have done much better.And I know you will do.
+
+    Pablo
+
