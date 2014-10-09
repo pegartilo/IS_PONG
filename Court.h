@@ -62,15 +62,15 @@ typedef struct {
 
 /** FOR INTERFACE */
 //Updates the court after calling the update functions on each component
-updateCourt(tCourt &court);
-
+void updateCourt(tCourt &court);
+/*
 //Methods so that Ball and PLayer can kno their positions
 tBallPosition getCurrentBallPosition(const tCourt court);
 tPlayerPosition getCurrentPlayerPosition(const tCourt court);
-
+*/
 //Checks wether the ball has collided with a player, and returns the part
-void ballCollided(bool &collided, int &part);
-void ballCollidedWall(bool &collided);
+void ballCollided(const tBall &ball, const tPlayers players, bool &collided, int &part);
+void ballCollidedWall(const tBall ball, bool &collided);
 
 
 /** INTERNAL FUNCTIONS*/

@@ -42,15 +42,55 @@ void updateCourt(tCourt &court) {
 }
 
 //Checks wether the ball has collided with a player, and returns the part
-void ballCollidedPlayer(bool &collided, int &part) {
-	collided = false;
-}
-void ballCollidedWall(bool &collided);
+void ballCollidedPlayer(const tBall &ball, const tPlayers players, bool &collided, int &part) {
 
+	int diffBallToPlayer;
+	int thidOfPlayer = (PLAYER_HEIGHT / 3);
+
+	if (((ball.position.x - 1) == (PLAYER_1_UPLEFT_EDGE_X + PLAYER_WIDTH)) /*Check x*/ && 
+		(ball.position.y >= players.player1Position) &&
+		(ball.position.y <= (players.player1Position + PLAYER_HEIGHT))) /*Check y*/ { //If true, collision with player 1
+
+		collided = true;
+		//Calculate the part collided with
+		diffBallToPlayer = (ball.position.x - players.player1Position);
+		if (diffBallToPlayer >= (2 * thirdOfPlayer)) {
+			part = 3;
+		} else if (diffBallToPlayer >= thirdOfPlayer) {
+			part = 2;
+		} else {
+			part = 1;
+		}
+	}
+	if  (((ball.position.x + BALL_WIDTH + 1) == (PLAYER_2_UPLEFT_EDGE_X)) /*Check x*/ && 
+		(ball.position.y >= players.player2Position) &&
+		(ball.position.y <= (players.player2Position + PLAYER_HEIGHT))) /*Check y*/ { //If true, collision with player 2
+
+		collided = true;
+		//Calculate the part collided with
+		diffBallToPlayer = (ball.position.x - players.player2Position);
+		if (diffBallToPlayer >= (2 * thirdOfPlayer)) {
+			part = 3;
+		} else if (diffBallToPlayer >= thirdOfPlayer) {
+			part = 2;
+		} else {
+			part = 1;
+		}
+	}
+}
+void ballCollidedWall(const tBall ball, bool &collided) {
+	collided = false;
+	if (ball.position.y == 0) {
+		collided = true;
+	} else if (ball.position == COURT_HEIGHT){
+		collided = true;
+	}
+}
+/*
 //Methods so that Ball and PLayer can kno their positions
 tBall getCurrentBallPosition(const tCourt court);
 tPlayers getCurrentPlayerPosition(const tCourt court);
-
+*/
 
 //Procedures to place players, ball...
 void placePlayers(tCourt &court, int player_1_x, int player_1_y, int player_2_x, int player_2_y) {
