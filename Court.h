@@ -5,6 +5,9 @@
 //External libraries
 //------------------
 
+#include "ball.h"
+#include "Player.h"
+
 //------------------
 //GLOBAL CONSTANTS
 //------------------
@@ -49,8 +52,7 @@ typedef tPixel tBoard [COURT_WIDTH][COURT_HEIGHT];
 
 typedef struct {
 	tBoard board;
-	tPlayer player1;
-	tPlayer player2;
+	tPlayers players;	
 	tBall
 } tCourt;
 
@@ -58,11 +60,7 @@ typedef struct {
 //FUNCTION PROTOTYPES
 //------------------
 
-//Initializes court with starting positions of players, ball and all that
-tCourt initializeCourt();
-
-//Updates the court with new information from the ball
-updateCourt(tCourt &court, tPlayerPosition newPlayer1Position, tPlayerPosition newPlayer2Position, tBallPosition newBallPosition);
+/** FOR INTERFACE */
 
 //Methods so that Ball and PLayer can kno their positions
 tBallPosition getCurrentBallPosition(const tCourt court);
@@ -70,5 +68,23 @@ tPlayerPosition getCurrentPlayerPosition(const tCourt court);
 
 //Checks wether the ball has collided with a player, and returns the part
 void ballCollided(bool &collided, int &part);
+
+
+/** INTERNAL FUNCTIONS*/
+
+//Initializes court with starting positions of players, ball and all that
+tCourt initializeCourt();
+
+//Updates the court with new information from the ball
+updateCourt(tCourt &court, const tPlayers &players, tBallPosition newBallPosition);
+
+//Delete the players and the ball from the array
+void deletePlayersAndBall(tCourt &court);
+
+//Procedures to place players, ball...
+void placePlayers(tCourt &court, int player_1_x, int player_1_y, int player_2_x, int player_2_y);
+void placeBall(tCourt &court, int ball_x, int ball_y);
+void placeNet(tCourt &court, int net_x);
+void emptyCourt(tCourt &court);
 
 #endif

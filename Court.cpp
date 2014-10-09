@@ -5,50 +5,82 @@ tCourt initializeCourt() {
 	tCourt newCourt;
 
 	//Empty the board
+	emptyCourt(newCourt);
 
-	//Place Blayers
+	//Place Players
+	placePlayers(newCourt,PLAYER_1_UPLEFT_EDGE_X, PLAYER_1_UPLEFT_EDGE_Y, PLAYER_2_UPLEFT_EDGE_X, PLAYER_2_UPLEFT_EDGE_Y);	
+
+	//Place Ball
+	placeBall(newCourt, BALL_START_UPLEFT_EDGE_X, BALL_START_UPLEFT_EDGE_Y);
+	
+	//Place Net
+	placeNet(newCourt, NET_LEFTMOST_X);
+	
+	return newCourt;
+}
+
+//Updates the court with new information from the ball
+void updateCourt(tCourt &court, const tPlayers &players, const tBall &ball) {
+	emptyCourt(court);
+
+	
+}
+
+//Checks wether the ball has collided with a player, and returns the part
+void ballCollided(bool &collided, int &part) {
+	collided = false;
+}
+
+//Methods so that Ball and PLayer can kno their positions
+tBall getCurrentBallPosition(const tCourt court);
+tPlayers getCurrentPlayerPosition(const tCourt court);
+
+
+//Procedures to place players, ball...
+void placePlayers(tCourt &court, int player_1_x, int player_1_y, int player_2_x, int player_2_y) {
 	for (int i = 0; i < PLAYER_HEIGHT; i++) {
 		//Place player 1
 		for (int j = 0; i < PLAYER_WIDTH; j++) {
-			newCourt.board[PLAYER_1_UPLEFT_EDGE_Y + i][PLAYER_1_UPLEFT_EDGE_X + j] = Bat;
+			court.board[player_1_y + i][player_1_x + j] = Bat;
 		}		
 		//Place player 2
 		for (int j = 0; i < PLAYER_WIDTH; j++) {
-			newCourt.board[PLAYER_2_UPLEFT_EDGE_Y + i][PLAYER_2_UPLEFT_EDGE_X + j] = Bat;
+			court.board[player_2_y + i][player_2_x + j] = Bat;
 		}	
 	}
-	//Place Ball
+}
+void placeBall(tCourt &court, int ball_x, int ball_y) {
 	for (int i = 0; i < BALL_HEIGHT; i++) {
 		for(int j = 0; j < BALL_WIDTH; j++) {
-			newCourt.board[BALL_START_UPLEFT_EDGE_Y + i][BALL_START_UPLEFT_EDGE_X + j] = Ball;
+			court.board[ball_y + i][ball_x + j] = Ball;		
 		}
 	}
-	//Place Net
+}
+void placeNet(tCourt &court, int net_x) {
 	bool netOn = true;
 	int netCount = 0;
 	for (int i = 0; i < COURT_HEIGHT; i++) {	
-		if({netCount = NET_HEIGHT) && !netOn) {
+		if((netCount = NET_PIECE_HEIGHT) && !netOn) {
 			netOn = true;
 		}
 
 		if (netOn) {
 			for(int a = 0; a < NET_WIDTH; a++) {
-				newCourt.board[i][NET_LEFTMOST_X + a] = Net;
+				court.board[i][net_x + a] = Net;
 			}
-			if (netCount = NET_HEIGHT) {
+			if (netCount = NET_PIECE_HEIGHT) {
 				netOn = false;
 				netCount = 0;
 			}
 		} 
 		netCount++;
 	}
-
-	return newCourt;
+}
+void emptyCourt(tCourt &court){
+	for (int i = 0; i < COURT_HEIGHT; i++) {
+		for (int j = 0; j < COURT_WIDTH; j++) {
+			court.board[i][j] = Empty;
+		}
+	}
 }
 
-//Updates the court with new information from the ball
-void updateCourt(tCourt &court, tPlayerPosition newPlayer1Position, tPlayerPosition newPlayer2Position, tBallPosition newBallPosition);
-
-//Methods so that Ball and PLayer can kno their positions
-tBallPosition getCurrentBallPosition(const tCourt court);
-tPlayerPosition getCurrentPlayerPosition(const tCourt court);
