@@ -1,4 +1,4 @@
-#include "ball.h"
+#include "Ball.h"
 
 
 void updateBall(tBall &ball, bool collision_player, int collisionZonePlayer, bool collision_wall)//esta funcion primero mira si es necesario cambiar la direccion por una collision tanto con un jugador como con un muro
@@ -86,7 +86,7 @@ void updateBallDirection(tBall &ball, bool collision_player, int collisionZonePl
 				ball.direction = down_right;
 			}
 			//*****************************
-			if (ball.direction == up_right)
+			else if (ball.direction == up_right)
 			{
 				ball.direction = up_left;
 			}
@@ -100,7 +100,7 @@ void updateBallDirection(tBall &ball, bool collision_player, int collisionZonePl
 			}
 		}
 		//**************************************************
-		if (collisionZonePlayer == 1)
+		else if (collisionZonePlayer == 1)
 		{
 			if (ball.direction == up_left)
 			{
@@ -115,7 +115,7 @@ void updateBallDirection(tBall &ball, bool collision_player, int collisionZonePl
 				ball.direction = mid_right;
 			}
 			//*****************************
-			if (ball.direction == up_right)
+			else if (ball.direction == up_right)
 			{
 				ball.direction = up_left;
 			}
@@ -129,7 +129,7 @@ void updateBallDirection(tBall &ball, bool collision_player, int collisionZonePl
 			}
 		}
 		//**************************************************
-		if (collisionZonePlayer == 3)
+		else if (collisionZonePlayer == 3)
 		{
 			if (ball.direction == up_left)
 			{
@@ -144,7 +144,7 @@ void updateBallDirection(tBall &ball, bool collision_player, int collisionZonePl
 				ball.direction = down_right;
 			}
 			//*****************************
-			if (ball.direction == up_right)
+			else if (ball.direction == up_right)
 			{
 				ball.direction = mid_left;
 			}
