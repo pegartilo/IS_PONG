@@ -4,6 +4,7 @@
 #include "Court.h"
 #include "Windows.h" //This probably shouldn't be here, but declared in another module upwards
 
+//COURT measures
 const int MAXNUMBEROFKEYS = 5; //Maybe the same as the comment above, but no so sure of this one
 
 typedef enum {standstill, up, down} tMovement;
