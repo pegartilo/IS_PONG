@@ -1,5 +1,5 @@
-#ifndef court
-#define court
+#ifndef Court_h
+#define Court_h
 
 //------------------
 //External libraries
@@ -11,6 +11,8 @@
 //------------------
 //GLOBAL CONSTANTS
 //------------------
+const int COURT_HEIGHT = 40;
+const int COURT_WIDTH = 79;
 
 //PLAYER measures
 const int PLAYER_WIDTH = 2;
@@ -28,10 +30,6 @@ const int BALL_HEIGHT = 2;
 const int BALL_START_UPLEFT_EDGE_X = 30;
 const int BALL_START_UPLEFT_EDGE_Y = 15;
 
-//COURT measures
-const int COURT_HEIGHT = 40;
-const int COURT_WIDTH = 80;
-
 //NET measures
 const int NET_LEFTMOST_X = 36;
 const int NET_WIDTH = 2;
@@ -46,14 +44,14 @@ typedef enum {
 	Bat,
 	Net,
 	Empty
-}tPixel;
+} tPixel;
 
-typedef tPixel tBoard [COURT_WIDTH][COURT_HEIGHT];
+typedef tPixel tBoard[COURT_WIDTH][COURT_HEIGHT];
 
 typedef struct {
 	tBoard board;
 	tPlayers players;	
-	tBall ball
+	tBall ball;
 } tCourt;
 
 //------------------
@@ -69,7 +67,7 @@ tBallPosition getCurrentBallPosition(const tCourt court);
 tPlayerPosition getCurrentPlayerPosition(const tCourt court);
 */
 //Checks wether the ball has collided with a player, and returns the part
-void ballCollided(const tBall &ball, const tPlayers players, bool &collided, int &part);
+void ballCollidedPlayer(const tBall &ball, const tPlayers &players, bool &collided, int &part);
 void ballCollidedWall(const tBall ball, bool &collided);
 
 

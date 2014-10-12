@@ -23,15 +23,15 @@ tCourt initializeCourt() {
 void updateCourt(tCourt &court) {
 
 	//Collision-checking
-	bool ballCollidedPlayer = false;
-	bool ballCollidedWall = false;
+	bool ballColPlayer = false;
+	bool ballColWall = false;
 	int player_part_collided = -1;
 
-	ballCollidedPlayer(ballCollidedPlayer, player_part_collided);
-	ballCollidedWall(ballCollidedWall);
+	ballCollidedPlayer(court.ball, court.players, ballColPlayer, player_part_collided);
+	ballCollidedWall(court.ball, ballColWall);
 
 	//Update positions of stuff calling their functions	
-	updateBall(court.ball, ballCollidedPlayer, player_part_collided, ballCollidedWall);
+	updateBall(court.ball, ballColPlayer, player_part_collided, ballColWall);
 	movePlayers(court.players);
 
 	//Place Stuff
@@ -45,7 +45,7 @@ void updateCourt(tCourt &court) {
 void ballCollidedPlayer(const tBall &ball, const tPlayers players, bool &collided, int &part) {
 
 	int diffBallToPlayer;
-	int thidOfPlayer = (PLAYER_HEIGHT / 3);
+	int thirdOfPlayer = (PLAYER_HEIGHT / 3);
 
 	if (((ball.position.x - 1) == (PLAYER_1_UPLEFT_EDGE_X + PLAYER_WIDTH)) /*Check x*/ && 
 		(ball.position.y >= players.player1Position) &&
@@ -78,11 +78,12 @@ void ballCollidedPlayer(const tBall &ball, const tPlayers players, bool &collide
 		}
 	}
 }
+
 void ballCollidedWall(const tBall ball, bool &collided) {
 	collided = false;
 	if (ball.position.y == 0) {
 		collided = true;
-	} else if (ball.position == COURT_HEIGHT){
+	} else if (ball.position.y == COURT_HEIGHT) {
 		collided = true;
 	}
 }
@@ -105,6 +106,7 @@ void placePlayers(tCourt &court, int player_1_x, int player_1_y, int player_2_x,
 		}	
 	}
 }
+
 void placeBall(tCourt &court, int ball_x, int ball_y) {
 	for (int i = 0; i < BALL_HEIGHT; i++) {
 		for(int j = 0; j < BALL_WIDTH; j++) {
@@ -112,6 +114,7 @@ void placeBall(tCourt &court, int ball_x, int ball_y) {
 		}
 	}
 }
+
 void placeNet(tCourt &court, int net_x) {
 	bool netOn = true;
 	int netCount = 0;
@@ -132,6 +135,7 @@ void placeNet(tCourt &court, int net_x) {
 		netCount++;
 	}
 }
+
 void emptyCourt(tCourt &court){
 	for (int i = 0; i < COURT_HEIGHT; i++) {
 		for (int j = 0; j < COURT_WIDTH; j++) {

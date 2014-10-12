@@ -1,15 +1,7 @@
-#ifndef BALL_H
-#define BALL_H
+#ifndef Ball_h
+#define Ball_h
 
-
-typedef enum {
-	up_right, 
-	mid_right, 
-	down_right, 
-	up_left,
-	mid_left, 
-	down_left
-} tDir;// con esto contemplamos las 6 direcciones posibles mas facil que hacer simetria.
+typedef enum {up_right, mid_right, down_right, up_left, mid_left, down_left} tDir;// con esto contemplamos las 6 direcciones posibles mas facil que hacer simetria.
 
 typedef struct 
 {
