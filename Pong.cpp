@@ -3,10 +3,24 @@
 using namespace std;
 #include <fstream>
 #include <iomanip>
+#include <Windows.h>
 
 #include "Court.h"
 #include "Meta.h"
- 
+
+// CONSTS
+const int SLEEP = 200; // stop the execution during X miliseconds 
+
+// ENUM
+typedef enum {
+	black, dark_blue, dark_green, dark_cyan, dark_red,
+	dark_magenta, dark_yellow, light_gray, dark_gray,
+	light_blue, light_green, light_cyan, light_red,
+	light_magenta, light_yellow, white
+} tColor;
+
+// STRUCTS
+
 typedef struct 
 {
 	tCourt court;
@@ -14,12 +28,15 @@ typedef struct
 } tGame;
 
 // FUNCTIONS 
-void displayCourt(const tGame &game);
-void lines();
-int menu();
+
+int  menu();
+void wallLines();
+void setColor(tColor color);
+void displayCourt(const tCourt &court);
 
 int main() {
-	int option;
+
+	int option, roundWinner;
 	bool finish, won;
 	tGame game;
 
@@ -29,25 +46,61 @@ int main() {
 	case 1:
 
 		finish = won = false;
+		initializeScore(game.score); // Initialize the score to 0
+		game.court = initializeCourt(); // Set the initial Court
 
-		while ((!finish) && (!won))
-		{
-			// WORK IN PROGRESS
+		do {
+			system("cls");
+			displayScore(game.score);
+			displayCourt(game.court);
 
-			// ver quien ha ganado
-			// won = updateScore(game.score, roundWinner); // Updates the score
-		}
+			Sleep(SLEEP); // Waits for the input
+			updateCourt(game.court); // //Updates the court after calling the update functions on each component
+
+			/***
+			**** (Esto debe de incluirse en Court) Comprueba si ha ganado el punto alguno de los dos jugadores
+			****/
+			int i = 0;
+			bool roundWin = false; // no one wins
+
+			while ((i < COURT_HEIGHT) && (!roundWin)) {
+				if (game.court.board[i][0] == Ball) {
+					roundWinner = 1;
+					roundWin = true;
+				}
+				else if (game.court.board[i][COURT_WIDTH] == Ball) {
+					roundWinner = 2;
+					roundWin = true;
+				}
+				i++;
+			}
+			/**** Copy above code until this ****/
+
+			won = updateScore(game.score, roundWinner);
+
+			if (won)
+			{
+				system("cls");
+
+				if (game.score.player1 == MAX_ROUNDS) {
+					cout << "The player 1 wons the game";
+				}
+				else {
+					cout << "The player 2 wons the game";
+				}
+			}
+			else if ((!won) && (roundWinner != -1)) {
+				game.court = initializeCourt(); // Won round, reset the board
+			}
+		} while ((!finish) && (!won));
 
 		break;
 	case 2:
 		// FUTURE IMPROVEMENTS
 		break;
 	}
+	option = menu();
 	
-	while (option != 0) {
-		
-	} 
-
 	return 0;
 }
 
@@ -55,8 +108,8 @@ int menu()
 {
 	int option;
 
-	cout << "1. Execute the game" << endl;
-	cout << "0. Exit" << endl;
+	cout << "1. Execute the game";
+	cout << "0. Exit";
 	cin >> option;
 
 	while (option < 0 || option > 1) {
@@ -67,33 +120,47 @@ int menu()
 	return option;
 }
 
-void displayCourt(const tGame &game) {
-	lines();
-	int middle;
+void displayCourt(const tCourt &court) {
 
-	middle = COURT_WIDTH / 2;
+	setColor(white);
+	wallLines(); // Top Walls
 
-	for (int i = 0; i < COURT_HEIGHT; i++) {
-		for (int j = 0; i < COURT_WIDTH; i++) {
-			if (j == middle)
+	for (int i = 0; i < COURT_WIDTH; i++) {
+		for (int j = 0; j < COURT_HEIGHT; j++) {
+
+			if (court.board[i][j] == Empty) 
 			{
-				cout << "|";
+				setColor(black);
+				cout << char(196);
+			} 
+			else if ((court.board[i][j] == Ball) || (court.board[i][j] == Bat))
+			{
+				setColor(white);
+				cout << char(196);
 			}
-			else
+			else if (court.board[i][j] == Net)
 			{
-				// FALTAAAA
-				cout << game.court.board[i][j];
+				setColor(white);
+				cout << char(179); // Test with 186
 			}
 		}
 	}
-
-
-	lines();
+	setColor(white);
+	wallLines();
 }
 
-void lines() {
+// Print top and bottom lines on the screen
+
+void wallLines() {
 	for (int i = 0; i < COURT_WIDTH; i++)  {
-		cout << "-";
+		cout << char(238); 
 	}
 	cout << endl;
+}
+
+// Function for coloring the characters
+
+void setColor(tColor color) {
+	HANDLE handle = GetStdHandle(STD_OUTPUT_HANDLE);
+	SetConsoleTextAttribute(handle, color);
 }
