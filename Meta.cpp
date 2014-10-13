@@ -5,19 +5,17 @@ void initializeScore(tScore &score)
 	score.player1 = score.player2 = 0;
 }
 
-bool updateScore(tScore &score, int winner)
-{
+bool updateScore(tScore &score, int roundWinner) {
 	bool won = false;
 
-	if (winner == 1) {
+	if (roundWinner == 1) {
 		score.player1++;
 	}
-	else {
+	else if (roundWinner == 2) {
 		score.player2++;
 	}
 
 	// Check if one player win's
-
 	if ((score.player1 == MAX_ROUNDS - 1) || (score.player1 == MAX_ROUNDS - 1)) {
 		won = true;
 	}
