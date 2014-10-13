@@ -34,7 +34,7 @@ tInput keyBoardInput() {
 	return input;
 }
 
-void tranfsformInput(tMovement &player1Move, tMovement &player2Move, bool &service) {
+void transformInput(tMovement &player1Move, tMovement &player2Move, bool &service) {
 	tInput input = keyBoardInput();
 
 	if (input.keysBeingPressed[0])
@@ -61,7 +61,7 @@ tPlayers movePlayers(tPlayers players) {
 	tInput input;
 	tMovement player1Move, player2Move;
 
-	tranfsformInput(player1Move, player2Move, players.service);
+	transformInput(player1Move, player2Move, players.service);
 	if (player1Move == up && players.player1Position > 0 + (PLAYER_HEIGHT / 2)) {
 		players.player1Position -= 1;
 	}
