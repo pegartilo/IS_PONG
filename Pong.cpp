@@ -60,21 +60,9 @@ int main() {
 			/***
 			**** (Esto debe de incluirse en Court) Comprueba si ha ganado el punto alguno de los dos jugadores
 			****/
-			int i = 0;
-			bool roundWin = false; // no one wins
-
-			while ((i < COURT_HEIGHT) && (!roundWin)) {
-				if (game.court.board[i][0] == Ball) {
-					roundWinner = 1;
-					roundWin = true;
-				}
-				else if (game.court.board[i][COURT_WIDTH] == Ball) {
-					roundWinner = 2;
-					roundWin = true;
-				}
-				i++;
-			}
+			
 			/**** Copy above code until this ****/
+			roundWinner = getRoundWinner(game.court);
 
 			won = updateScore(game.score, roundWinner);
 

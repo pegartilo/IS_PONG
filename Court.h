@@ -26,6 +26,7 @@ typedef struct {
 	tPlayers players;
 	tBall ball;
 	tBoard board;
+	int roundWinner;
 } tCourt;
 
 //------------------
@@ -44,12 +45,13 @@ tPlayerPosition getCurrentPlayerPosition(const tCourt court);
 void ballCollidedPlayer(const tBall &ball, const tPlayers &players, bool &collided, int &part);
 void ballCollidedWall(const tBall &ball, bool &collided);
 
+int getRoundWinner(const tCourt &court);
+
 
 /** INTERNAL FUNCTIONS*/
 
 //Initializes court with starting positions of players, ball and all that
 tCourt initializeCourt();
-
 
 
 //Delete the players and the ball from the array
@@ -60,5 +62,7 @@ void placePlayers(tCourt &court, int player_1_x, int player_1_y, int player_2_x,
 void placeBall(tCourt &court, int ball_x, int ball_y);
 void placeNet(tCourt &court, int net_x);
 void emptyCourt(tCourt &court);
+
+void isThereAWinner(tCourt &court);
 
 #endif

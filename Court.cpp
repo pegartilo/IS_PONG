@@ -22,6 +22,8 @@ tCourt initializeCourt() {
 //Updates the court with new information from the ball
 void updateCourt(tCourt &court) {
 
+	court.roundWinner = -1;
+
 	//Collision-checking
 	bool ballColPlayer = false;
 	bool ballColWall = false;
@@ -39,6 +41,10 @@ void updateCourt(tCourt &court) {
 	placePlayers(court, PLAYER_1_UPLEFT_EDGE_X, court.players.player1Position, PLAYER_2_UPLEFT_EDGE_X, court.players.player2Position);
 	placeBall(court, court.ball.position.x, court.ball.position.y);
 	placeNet(court, NET_LEFTMOST_X);
+
+	//IsThereAWinner
+	isThereAWinner(court);
+	
 }
 
 //Checks wether the ball has collided with a player, and returns the part
@@ -93,6 +99,10 @@ tBall getCurrentBallPosition(const tCourt court);
 tPlayers getCurrentPlayerPosition(const tCourt court);
 */
 
+int getRoundWinner(const tCourt &court) {
+	return court.roundWinner;
+}
+
 //Procedures to place players, ball...
 void placePlayers(tCourt &court, int player_1_x, int player_1_y, int player_2_x, int player_2_y) {
 	for (int i = 0; i < PLAYER_HEIGHT; i++) {
@@ -103,7 +113,7 @@ void placePlayers(tCourt &court, int player_1_x, int player_1_y, int player_2_x,
 		//Place player 2
 		for (int j = 0; i < PLAYER_WIDTH; j++) {
 			court.board[player_2_y + i][player_2_x + j] = Bat;
-		}	
+		}
 	}
 }
 
@@ -141,5 +151,22 @@ void emptyCourt(tCourt &court){
 		for (int j = 0; j < COURT_WIDTH; j++) {
 			court.board[i][j] = Empty;
 		}
+	}
+}
+
+void isThereAWinner(tCourt &court) {
+	int i = 0;
+	bool roundWin = false; // no one wins
+
+	while ((i < COURT_HEIGHT) && (!roundWin)) {
+		if (court.board[i][0] == Ball) {
+			court.roundWinner = 1;
+			roundWin = true;
+		}
+		else if (court.board[i][COURT_WIDTH] == Ball) {
+			court.roundWinner = 2;
+			roundWin = true;
+		}
+		i++;
 	}
 }
