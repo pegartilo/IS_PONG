@@ -42,7 +42,7 @@ void updateCourt(tCourt &court) {
 }
 
 //Checks wether the ball has collided with a player, and returns the part
-void ballCollidedPlayer(const tBall &ball, const tPlayers players, bool &collided, int &part) {
+void ballCollidedPlayer(const tBall &ball, const tPlayers &players, bool &collided, int &part) {
 
 	int diffBallToPlayer;
 	int thirdOfPlayer = (PLAYER_HEIGHT / 3);
@@ -79,7 +79,7 @@ void ballCollidedPlayer(const tBall &ball, const tPlayers players, bool &collide
 	}
 }
 
-void ballCollidedWall(const tBall ball, bool &collided) {
+void ballCollidedWall(const tBall &ball, bool &collided) {
 	collided = false;
 	if (ball.position.y == 0) {
 		collided = true;
