@@ -54,14 +54,9 @@ int main() {
 			displayScore(game.score);
 			displayCourt(game.court);
 
-			Sleep(SLEEP); // Waits for the input
 			updateCourt(game.court); // //Updates the court after calling the update functions on each component
+			Sleep(SLEEP); // Waits for the input
 
-			/***
-			**** (Esto debe de incluirse en Court) Comprueba si ha ganado el punto alguno de los dos jugadores
-			****/
-			
-			/**** Copy above code until this ****/
 			roundWinner = getRoundWinner(game.court);
 
 			won = updateScore(game.score, roundWinner);
