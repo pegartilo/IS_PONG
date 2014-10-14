@@ -1,6 +1,5 @@
 #include "Ball.h"
 
-
 void updateBall(tBall &ball, bool collision_player, int collisionZonePlayer, bool collision_wall)//esta funcion primero mira si es necesario cambiar la direccion por una collision tanto con un jugador como con un muro
 {
 	updateBallDirection(ball, collision_player, collisionZonePlayer, collision_wall);
