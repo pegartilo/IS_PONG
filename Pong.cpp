@@ -9,7 +9,7 @@ using namespace std;
 #include "Meta.h"
 
 // CONSTS
-const int SLEEP = 200; // stop the execution during X miliseconds 
+const int SLEEP = 100; // stop the execution during X miliseconds 
 
 // ENUM
 typedef enum {
@@ -21,21 +21,19 @@ typedef enum {
 
 // STRUCTS
 
-typedef struct 
-{
+typedef struct {
 	tCourt court;
 	tScore score;
 } tGame;
 
 // FUNCTIONS 
 
-int  menu();
+int menu();
 void wallLines();
 void setColor(tColor color);
 void displayCourt(const tCourt &court);
 
 int main() {
-
 	int option, roundWinner;
 	bool finish, won;
 	tGame game;
@@ -72,9 +70,9 @@ int main() {
 					cout << "The player 2 wons the game";
 				}
 			}
-			else if ((!won) && (roundWinner != -1)) {
+			/*else if ((!won) && (roundWinner != -1)) { //Bugged as shit
 				game.court = initializeCourt(); // Won round, reset the board
-			}
+			}*/
 		} while ((!finish) && (!won));
 
 		break;
@@ -83,16 +81,15 @@ int main() {
 		break;
 	}
 	option = menu();
-	
+
 	return 0;
 }
 
-int menu()
-{
+int menu() {
 	int option;
 
-	cout << "1. Execute the game";
-	cout << "0. Exit";
+	cout << "1. Execute the game" << endl;
+	cout << "0. Exit" << endl;
 	cin >> option;
 
 	while (option < 0 || option > 1) {
@@ -108,37 +105,31 @@ void displayCourt(const tCourt &court) {
 	setColor(white);
 	wallLines(); // Top Walls
 
-	for (int i = 0; i < COURT_WIDTH; i++) {
-		for (int j = 0; j < COURT_HEIGHT; j++) {
+	for (int i = 0; i < COURT_HEIGHT; i++) {
+		for (int j = 0; j < COURT_WIDTH; j++) {
+			if (court.board[i][j] == Empty)
+				cout << char(32);
+			else if (court.board[i][j] == Ball) {
+				setColor(light_green);
+				cout << char(219);
+			}
+			else if ((court.board[i][j] == Bat) || (court.board[i][j] == Net)) {
+				setColor(white);
+				cout << char(219);
+			}
 
-			if (court.board[i][j] == Empty) 
-			{
-				setColor(black);
-				cout << char(196);
-			} 
-			else if ((court.board[i][j] == Ball) || (court.board[i][j] == Bat))
-			{
-				setColor(white);
-				cout << char(196);
-			}
-			else if (court.board[i][j] == Net)
-			{
-				setColor(white);
-				cout << char(179); // Test with 186
-			}
 		}
 	}
+
 	setColor(white);
-	wallLines();
+	wallLines(); //Bottom Walls
 }
 
 // Print top and bottom lines on the screen
 
 void wallLines() {
-	for (int i = 0; i < COURT_WIDTH; i++)  {
-		cout << char(238); 
-	}
-	cout << endl;
+	for (int i = 0; i < COURT_WIDTH; i++)
+		cout << char(196);
 }
 
 // Function for coloring the characters
