@@ -23,9 +23,8 @@ bool updateScore(tScore &score, int roundWinner) {
 	return won;
 }
 
-void displayScore(tScore score)
-{
-	cout << setw(20) << " " << "---------------------" << endl; // Top lines of the score
-	cout << setw(20) << " " << "-------" << score.player1 << "-" << score.player2 << "-------" << endl;
-	cout << setw(20) << " " << "---------------------" << endl; // Bottom lines of the score
+void displayScore(tScore score) {
+	cout << setw(30) << " " << "---------------------" << endl; // Top lines of the score
+	cout << setw(30) << " " << "--------" << score.player1 << "-" << score.player2 << "--------" << endl;
+	cout << setw(30) << " " << "---------------------" << endl; // Bottom lines of the score
 }
