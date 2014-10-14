@@ -21,7 +21,7 @@ tCourt initializeCourt() {
 
 //Updates the court with new information from the ball
 void updateCourt(tCourt &court) {
-
+	
 	court.roundWinner = -1;
 
 	//Collision-checking
@@ -176,11 +176,11 @@ void isThereAWinner(tCourt &court) {
 	bool roundWin = false; // no one wins
 
 	while ((i < COURT_HEIGHT) && (!roundWin)) {
-		if (court.board[i][0] == Ball) {
+		if (court.ball.position.x == 0) {
 			court.roundWinner = 1;
 			roundWin = true;
 		}
-		else if (court.board[i][COURT_WIDTH] == Ball) {
+		else if (court.ball.position.x == COURT_WIDTH - 1) {
 			court.roundWinner = 2;
 			roundWin = true;
 		}
