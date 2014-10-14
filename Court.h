@@ -53,7 +53,6 @@ int getRoundWinner(const tCourt &court);
 //Initializes court with starting positions of players, ball and all that
 tCourt initializeCourt();
 
-
 //Delete the players and the ball from the array
 void deletePlayersAndBall(tCourt &court);
 
@@ -63,6 +62,6 @@ void placeBall(tCourt &court, int ball_x, int ball_y);
 void placeNet(tCourt &court, int net_x);
 void emptyCourt(tCourt &court);
 
-void isThereAWinner(tCourt &court);
+bool isThereAWinner(tCourt &court);
 
 #endif
