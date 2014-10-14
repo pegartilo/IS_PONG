@@ -5,27 +5,20 @@
 //GLOBAL CONSTANTS
 //------------------
 const int COURT_HEIGHT = 40;
-const int COURT_WIDTH = 79;
+const int COURT_WIDTH = 80;
 
 //PLAYER measures
-const int PLAYER_WIDTH = 2;
-const int PLAYER_HEIGHT = 5;
-	//The position of the leftmost uppermost edge 
-	//in the player, to calculate starting position
-const int PLAYER_1_UPLEFT_EDGE_Y = 17;
-const int PLAYER_1_UPLEFT_EDGE_X = 4;
-const int PLAYER_2_UPLEFT_EDGE_Y = 17;
-const int PLAYER_2_UPLEFT_EDGE_X = 74;
+const int PLAYER_WIDTH = 1;
+const int PLAYER_HEIGHT = 6;
+const int PLAYER1X = 1;
+const int PLAYER2X = 78;
 
 //BALL measures
 const int BALL_WIDTH = 2;
 const int BALL_HEIGHT = 2;
-const int BALL_START_UPLEFT_EDGE_X = 30;
-const int BALL_START_UPLEFT_EDGE_Y = 15;
+const int INITIALXPOSITION = 30;
+const int INITIALYPOSITION = 15;
 
 //NET measures
-const int NET_LEFTMOST_X = 36;
-const int NET_WIDTH = 2;
-const int NET_PIECE_HEIGHT = 5;
-
-#endif // !Constants_h
+const int NETX = 39;
+#endif
