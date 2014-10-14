@@ -9,8 +9,7 @@ using namespace std;
 
 const int MAX_ROUNDS = 3;
 
-typedef struct
-{
+typedef struct {
 	int player1;
 	int player2;
 } tScore;
