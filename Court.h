@@ -20,7 +20,7 @@ typedef enum {
 	Empty
 } tPixel;
 
-typedef tPixel tBoard[COURT_WIDTH][COURT_HEIGHT];
+typedef tPixel tBoard[COURT_HEIGHT][COURT_WIDTH];
 
 typedef struct {
 	tPlayers players;
@@ -58,7 +58,7 @@ tCourt initializeCourt();
 void deletePlayersAndBall(tCourt &court);
 
 //Procedures to place players, ball...
-void placePlayers(tCourt &court, int player_1_x, int player_1_y, int player_2_x, int player_2_y);
+void placePlayers(tCourt &court, int player1x, int player2x);
 void placeBall(tCourt &court, int ball_x, int ball_y);
 void placeNet(tCourt &court, int net_x);
 void emptyCourt(tCourt &court);
