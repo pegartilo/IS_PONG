@@ -177,12 +177,12 @@ bool isThereAWinner(tCourt &court) {
 	bool roundWin = false; // no one wins
 
 	while ((i < COURT_HEIGHT) && (!roundWin)) {
-		if (court.board[i][0] == Ball) {
-			court.roundWinner = 1;
+		if ((court.board[i][0] == Ball) && (court.board[i][1] == Ball)) {
+			court.roundWinner = 2;
 			roundWin = true;
 		}
-		else if (court.board[i][COURT_WIDTH] == Ball) {
-			court.roundWinner = 2;
+		else if ((court.board[i][COURT_WIDTH - 1] == Ball) && (court.board[i][COURT_WIDTH] == Ball)) {
+			court.roundWinner = 1;
 			roundWin = true;
 		}
 		i++;
