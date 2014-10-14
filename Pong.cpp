@@ -35,55 +35,56 @@ void displayCourt(const tCourt &court);
 
 int main() {
 	int option, roundWinner;
-	bool finish, won;
+	bool finish, wonGame, wonRound;
 	tGame game;
 
 	option = menu();
 
-	switch (option) {
-	case 1:
+	while (option != 0) {
+		switch (option) {
+		case 1:
 
-		finish = won = false;
-		initializeScore(game.score); // Initialize the score to 0
-		game.court = initializeCourt(); // Set the initial Court
+			finish = wonGame = false;
+			initializeScore(game.score); // Initialize the score to 0
+			game.court = initializeCourt(); // Set the initial Court
 
-		do {
-			system("cls");
-			displayScore(game.score);
-			displayCourt(game.court);
-
-			updateCourt(game.court); // //Updates the court after calling the update functions on each component
-			Sleep(SLEEP); // Waits for the input
-
-			roundWinner = getRoundWinner(game.court);
-
-			won = updateScore(game.score, roundWinner);
-
-			if (won)
-			{
+			do {
 				system("cls");
 				displayScore(game.score);
+				displayCourt(game.court);
 
-				if (game.score.player1 == MAX_ROUNDS) {
-					cout << "The player 1 wons the game";
-				}
-				else {
-					cout << "The player 2 wons the game";
-				}
-			}
-			/*
-			if ((!won) && (roundWinner != -1)) { //Bugged as shit
-				game.court = initializeCourt(); // Won round, reset the board
-			}
-			*/
-		} while ((!finish) && (!won));
+				updateCourt(game.court); // //Updates the court after calling the update functions on each component
+				Sleep(SLEEP); // Waits for the input
 
-		break;
-	case 2:
-		// FUTURE IMPROVEMENTS
-		break;
+				wonRound = isThereAWinner(game.court);
+				wonGame = updateScore(game.score, game.court.roundWinner);
+
+				if (wonGame)
+				{
+					system("cls");
+					displayScore(game.score);
+
+					if (game.score.player1 == MAX_ROUNDS) {
+						cout << "The player 1 wons the game";
+					}
+					else {
+						cout << "The player 2 wons the game";
+					}
+				}
+				else if ((!wonGame) && (wonRound)) {
+					// Aquí no hay ningún bug, resetea el juego... Solo que la bola por defecto empieza en el medio
+					game.court = initializeCourt();// Won round, reset the board
+				}
+
+			} while ((!finish) && (!wonGame));
+
+			break;
+		case 2:
+			// FUTURE IMPROVEMENTS
+			break;
+		}
+		option = menu();
 	}
-	option = menu();
 
 	return 0;
 }
