@@ -171,19 +171,22 @@ void emptyCourt(tCourt &court){
 	}
 }
 
-void isThereAWinner(tCourt &court) {
+
+bool isThereAWinner(tCourt &court) {
 	int i = 0;
 	bool roundWin = false; // no one wins
 
 	while ((i < COURT_HEIGHT) && (!roundWin)) {
-		if (court.ball.position.x == 0) {
+		if (court.board[i][0] == Ball) {
 			court.roundWinner = 1;
 			roundWin = true;
 		}
-		else if (court.ball.position.x == COURT_WIDTH - 1) {
+		else if (court.board[i][COURT_WIDTH] == Ball) {
 			court.roundWinner = 2;
 			roundWin = true;
 		}
 		i++;
 	}
+	return roundWin;
 }
+
