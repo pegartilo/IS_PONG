@@ -1,20 +1,20 @@
 #include "Court.h"
+#include <iostream>
 
-//Initializes court with starting positions of players, ball and all that
 tCourt initializeCourt() {
 	tCourt newCourt;
 
-	//Empty the board
 	emptyCourt(newCourt);
 
-	//Place Players
-	placePlayers(newCourt,PLAYER_1_UPLEFT_EDGE_X, PLAYER_1_UPLEFT_EDGE_Y, PLAYER_2_UPLEFT_EDGE_X, PLAYER_2_UPLEFT_EDGE_Y);	
+	newCourt.players = resetPlayers();
+	placePlayers(newCourt, PLAYER1X, PLAYER2X);
 
-	//Place Ball
-	placeBall(newCourt, BALL_START_UPLEFT_EDGE_X, BALL_START_UPLEFT_EDGE_Y);
-	
-	//Place Net
-	placeNet(newCourt, NET_LEFTMOST_X);
+	placeBall(newCourt, INITIALXPOSITION, INITIALYPOSITION);
+	newCourt.ball.direction = down_left;
+	newCourt.ball.position.x = INITIALXPOSITION;
+	newCourt.ball.position.y = INITIALYPOSITION;
+
+	placeNet(newCourt, NETX);
 	
 	return newCourt;
 }
@@ -38,9 +38,9 @@ void updateCourt(tCourt &court) {
 
 	//Place Stuff
 	emptyCourt(court);
-	placePlayers(court, PLAYER_1_UPLEFT_EDGE_X, court.players.player1Position, PLAYER_2_UPLEFT_EDGE_X, court.players.player2Position);
+	placePlayers(court, PLAYER1X, PLAYER2X);
 	placeBall(court, court.ball.position.x, court.ball.position.y);
-	placeNet(court, NET_LEFTMOST_X);
+	placeNet(court, NETX);
 
 	//IsThereAWinner
 	isThereAWinner(court);
@@ -53,13 +53,11 @@ void ballCollidedPlayer(const tBall &ball, const tPlayers &players, bool &collid
 	int diffBallToPlayer;
 	int thirdOfPlayer = (PLAYER_HEIGHT / 3);
 
-	if (((ball.position.x - 1) == (PLAYER_1_UPLEFT_EDGE_X + PLAYER_WIDTH)) /*Check x*/ && 
-		(ball.position.y >= players.player1Position) &&
-		(ball.position.y <= (players.player1Position + PLAYER_HEIGHT))) /*Check y*/ { //If true, collision with player 1
+	if (ball.position.x - PLAYER1X == 1 && ball.position.y - players.player1y >= 0 && ball.position.y - players.player1y < PLAYER_HEIGHT) {
 
 		collided = true;
 		//Calculate the part collided with
-		diffBallToPlayer = (ball.position.x - players.player1Position);
+		diffBallToPlayer = (ball.position.y - players.player1y);
 		if (diffBallToPlayer >= (2 * thirdOfPlayer)) {
 			part = 3;
 		} else if (diffBallToPlayer >= thirdOfPlayer) {
@@ -68,33 +66,66 @@ void ballCollidedPlayer(const tBall &ball, const tPlayers &players, bool &collid
 			part = 1;
 		}
 	}
-	if  (((ball.position.x + BALL_WIDTH + 1) == (PLAYER_2_UPLEFT_EDGE_X)) /*Check x*/ && 
-		(ball.position.y >= players.player2Position) &&
-		(ball.position.y <= (players.player2Position + PLAYER_HEIGHT))) /*Check y*/ { //If true, collision with player 2
+
+	if (ball.position.x - PLAYER2X == -1 && ball.position.y - players.player2y >= 0 && ball.position.y - players.player2y < PLAYER_HEIGHT) {
 
 		collided = true;
 		//Calculate the part collided with
-		diffBallToPlayer = (ball.position.x - players.player2Position);
+		diffBallToPlayer = (ball.position.y - players.player2y);
 		if (diffBallToPlayer >= (2 * thirdOfPlayer)) {
 			part = 3;
-		} else if (diffBallToPlayer >= thirdOfPlayer) {
+		}
+		else if (diffBallToPlayer >= thirdOfPlayer) {
 			part = 2;
-		} else {
+		}
+		else {
 			part = 1;
 		}
 	}
+///////////////////////////////////////////////Had to re-do this part
+//	if (((ball.position.y - 1) == (players.player1y + (PLAYER_WIDTH - 1))) && 
+//		(ball.position.y >= players.player1y) &&
+//		(ball.position.y <= (players.player1y + PLAYER_HEIGHT))) { //If true, collision with player 1
+//
+//		collided = true;
+//		//Calculate the part collided with
+//		diffBallToPlayer = (ball.position.x - players.player1y);
+//		if (diffBallToPlayer >= (2 * thirdOfPlayer)) {
+//			part = 3;
+//		} else if (diffBallToPlayer >= thirdOfPlayer) {
+//			part = 2;
+//		} else {
+//			part = 1;
+//		}
+//	}
+//	if (((ball.position.x + BALL_WIDTH + 1) == (PLAYER_2_UPLEFT_EDGE_X)) && 
+//		(ball.position.y >= players.player2y) &&
+//		(ball.position.y <= (players.player2y + PLAYER_HEIGHT))) { //If true, collision with player 2
+//
+//		collided = true;
+//		//Calculate the part collided with
+//		diffBallToPlayer = (ball.position.x - players.player2y);
+//		if (diffBallToPlayer >= (2 * thirdOfPlayer)) {
+//			part = 3;
+//		} else if (diffBallToPlayer >= thirdOfPlayer) {
+//			part = 2;
+//		} else {
+//			part = 1;
+//		}
+//	}
 }
 
 void ballCollidedWall(const tBall &ball, bool &collided) {
 	collided = false;
 	if (ball.position.y == 0) {
 		collided = true;
-	} else if (ball.position.y == COURT_HEIGHT) {
+	}
+	else if (ball.position.y == COURT_HEIGHT - 1) {
 		collided = true;
 	}
 }
 /*
-//Methods so that Ball and PLayer can kno their positions
+//Methods so that Ball and PLayer can know their positions
 tBall getCurrentBallPosition(const tCourt court);
 tPlayers getCurrentPlayerPosition(const tCourt court);
 */
@@ -104,45 +135,31 @@ int getRoundWinner(const tCourt &court) {
 }
 
 //Procedures to place players, ball...
-void placePlayers(tCourt &court, int player_1_x, int player_1_y, int player_2_x, int player_2_y) {
+void placePlayers(tCourt &court, int player1x, int player2x) {
 	for (int i = 0; i < PLAYER_HEIGHT; i++) {
 		//Place player 1
-		for (int j = 0; i < PLAYER_WIDTH; j++) {
-			court.board[player_1_y + i][player_1_x + j] = Bat;
-		}		
+		for (int j = 0; j < PLAYER_WIDTH; j++)
+			court.board[court.players.player1y + i][player1x + j] = Bat;	
 		//Place player 2
-		for (int j = 0; i < PLAYER_WIDTH; j++) {
-			court.board[player_2_y + i][player_2_x + j] = Bat;
-		}
+		for (int j = 0; j < PLAYER_WIDTH; j++)
+			court.board[court.players.player2y + i][player2x + j] = Bat;
 	}
 }
 
 void placeBall(tCourt &court, int ball_x, int ball_y) {
 	for (int i = 0; i < BALL_HEIGHT; i++) {
-		for(int j = 0; j < BALL_WIDTH; j++) {
+		for (int j = 0; j < BALL_WIDTH; j++) {
 			court.board[ball_y + i][ball_x + j] = Ball;		
 		}
 	}
 }
 
 void placeNet(tCourt &court, int net_x) {
-	bool netOn = true;
-	int netCount = 0;
-	for (int i = 0; i < COURT_HEIGHT; i++) {	
-		if((netCount = NET_PIECE_HEIGHT) && !netOn) {
-			netOn = true;
+	for (int i = 0; i < COURT_HEIGHT; ++i) {
+		for (int j = 0; j < COURT_WIDTH; j++) {
+			if (j == net_x || j == net_x + 1)
+				court.board[i][j] = Net;
 		}
-
-		if (netOn) {
-			for(int a = 0; a < NET_WIDTH; a++) {
-				court.board[i][net_x + a] = Net;
-			}
-			if (netCount = NET_PIECE_HEIGHT) {
-				netOn = false;
-				netCount = 0;
-			}
-		} 
-		netCount++;
 	}
 }
 
