@@ -3,8 +3,8 @@
 tPlayers resetPlayers() {
 	tPlayers players;
 	
-	players.player1Position = COURT_HEIGHT / 2;
-	players.player2Position = COURT_HEIGHT / 2;
+	players.player1y = COURT_HEIGHT / 2;
+	players.player2y = COURT_HEIGHT / 2;
 	players.service = false;
 
 	return players;
@@ -57,23 +57,20 @@ void transformInput(tMovement &player1Move, tMovement &player2Move, bool &servic
 		service = false;
 }
 
-tPlayers movePlayers(tPlayers players) {
+void movePlayers(tPlayers &players) {
 	tInput input;
 	tMovement player1Move, player2Move;
 
 	transformInput(player1Move, player2Move, players.service);
-	if (player1Move == up && players.player1Position > 0 + (PLAYER_HEIGHT / 2)) {
-		players.player1Position -= 1;
-	}
-	else if (player1Move == down && players.player1Position < COURT_HEIGHT - (PLAYER_HEIGHT / 2)) {
-		players.player1Position += 1;
-	}
-	if (player2Move == up && players.player2Position > 0 + (PLAYER_HEIGHT / 2)) {
-		players.player2Position -= 1;
-	}
-	else if (player2Move == down && players.player2Position > COURT_HEIGHT - (PLAYER_HEIGHT / 2)) {
-		players.player2Position += 1;
-	}
 
-	return players;
+	if (player1Move == up && players.player1y > 0) 
+		players.player1y -= 1;
+	else if (player1Move == down && players.player1y < COURT_HEIGHT - (PLAYER_HEIGHT))
+		players.player1y += 1;
+
+	if (player2Move == up && players.player2y > 0) 
+		players.player2y -= 1;
+	else if (player2Move == down && players.player2y < COURT_HEIGHT - (PLAYER_HEIGHT)) {
+		players.player2y += 1;
+	}
 }
