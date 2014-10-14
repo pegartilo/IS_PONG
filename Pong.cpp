@@ -1,6 +1,3 @@
-#include <iostream>
-#include <string>
-using namespace std;
 #include <fstream>
 #include <iomanip>
 #include <Windows.h>
@@ -39,102 +36,98 @@ int main() {
 	tGame game;
 
 	option = menu();
+	while (option != 0) {
+		switch (option) {
+		case 1:
 
-	switch (option) {
-	case 1:
+			finish = won = false;
+			initializeScore(game.score); // Initialize the score to 0
+			game.court = initializeCourt(); // Set the initial Court
 
-		finish = won = false;
-		initializeScore(game.score); // Initialize the score to 0
-		game.court = initializeCourt(); // Set the initial Court
-
-		do {
-			system("cls");
-			displayScore(game.score);
-			displayCourt(game.court);
-
-			updateCourt(game.court); // //Updates the court after calling the update functions on each component
-			Sleep(SLEEP); // Waits for the input
-
-			roundWinner = getRoundWinner(game.court);
-
-			won = updateScore(game.score, roundWinner);
-
-			if (won)
-			{
+			do {
 				system("cls");
+				displayScore(game.score);
+				displayCourt(game.court);
 
-				if (game.score.player1 == MAX_ROUNDS) {
-					cout << "The player 1 wons the game";
-				}
-				else {
-					cout << "The player 2 wons the game";
-				}
-			}
-			/*else if ((!won) && (roundWinner != -1)) { //Bugged as shit
-				game.court = initializeCourt(); // Won round, reset the board
-			}*/
-		} while ((!finish) && (!won));
+				updateCourt(game.court); // //Updates the court after calling the update functions on each component
+				Sleep(SLEEP); // Waits for the input
 
-		break;
-	case 2:
-		// FUTURE IMPROVEMENTS
-		break;
+				roundWinner = getRoundWinner(game.court);
+
+				won = updateScore(game.score, roundWinner);
+
+				if (won) {
+					system("cls");
+
+					if (game.score.player1 == MAX_ROUNDS) {
+						cout << "The player 1 wins the game" << endl;
+					}
+					else {
+						cout << "The player 2 wins the game" << endl;
+					}
+				}
+				else if ((!won) && (roundWinner != -1)) { //Bugged as shit
+					game.court = initializeCourt(); // Won round, reset the board
+				}
+			} while ((!finish) && (!won));
+			break;
+		}
+		option = menu();
 	}
-	option = menu();
 
 	return 0;
 }
 
-int menu() {
-	int option;
+	int menu() {
+		int option;
 
-	cout << "1. Execute the game" << endl;
-	cout << "0. Exit" << endl;
-	cin >> option;
-
-	while (option < 0 || option > 1) {
-		cout << "Invalid number. Try again";
+		cout << "1. Execute the game" << endl;
+		cout << "0. Exit" << endl;
 		cin >> option;
-	}
 
-	return option;
-}
-
-void displayCourt(const tCourt &court) {
-
-	setColor(white);
-	wallLines(); // Top Walls
-
-	for (int i = 0; i < COURT_HEIGHT; i++) {
-		for (int j = 0; j < COURT_WIDTH; j++) {
-			if (court.board[i][j] == Empty)
-				cout << char(32);
-			else if (court.board[i][j] == Ball) {
-				setColor(light_green);
-				cout << char(219);
-			}
-			else if ((court.board[i][j] == Bat) || (court.board[i][j] == Net)) {
-				setColor(white);
-				cout << char(219);
-			}
-
+		while (option < 0 || option > 1) {
+			cout << "Invalid number. Try again" << endl;
+			cin >> option;
 		}
+
+		return option;
 	}
 
-	setColor(white);
-	wallLines(); //Bottom Walls
-}
+	void displayCourt(const tCourt &court) {
 
-// Print top and bottom lines on the screen
+		setColor(white);
+		wallLines(); // Top Walls
 
-void wallLines() {
-	for (int i = 0; i < COURT_WIDTH; i++)
-		cout << char(196);
-}
+		for (int i = 0; i < COURT_HEIGHT; i++) {
+			for (int j = 0; j < COURT_WIDTH; j++) {
+				if (court.board[i][j] == Empty)
+					cout << char(32);
+				else if (court.board[i][j] == Ball) {
+					setColor(light_green);
+					cout << char(219);
+				}
+				else if ((court.board[i][j] == Bat) || (court.board[i][j] == Net)) {
+					setColor(white);
+					cout << char(219);
+				}
 
-// Function for coloring the characters
+			}
+		}
 
-void setColor(tColor color) {
-	HANDLE handle = GetStdHandle(STD_OUTPUT_HANDLE);
-	SetConsoleTextAttribute(handle, color);
-}
+		setColor(white);
+		wallLines(); //Bottom Walls
+	}
+
+	// Print top and bottom lines on the screen
+
+	void wallLines() {
+		for (int i = 0; i < COURT_WIDTH; i++)
+			cout << char(196);
+	}
+
+	// Function for coloring the characters
+
+	void setColor(tColor color) {
+		HANDLE handle = GetStdHandle(STD_OUTPUT_HANDLE);
+		SetConsoleTextAttribute(handle, color);
+	}
