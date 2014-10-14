@@ -13,8 +13,8 @@ typedef bool boolArray[MAXNUMBEROFKEYS]; //Both these arrays are used for regist
 typedef int intArray[MAXNUMBEROFKEYS];
 
 typedef struct {
-	int player1Position;
-	int player2Position;
+	int player1y;
+	int player2y;
 	bool service;
 } tPlayers;
 
@@ -26,6 +26,6 @@ typedef struct {
 tPlayers resetPlayers();
 tInput keyBoardInput();
 void tranfsformInput(tMovement &player1Move, tMovement &player2Move, bool &service);
-tPlayers movePlayers(tPlayers players);
+void movePlayers(tPlayers &players);
 
 #endif
