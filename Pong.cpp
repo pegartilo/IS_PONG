@@ -95,6 +95,7 @@ int menu() {
 	cout << endl;
 	cout << "1. Execute the game" << endl;
 	cout << "0. Exit" << endl;
+	cout << "Enter your option :";
 	cin >> option;
 
 	while (option < 0 || option > 1) {
