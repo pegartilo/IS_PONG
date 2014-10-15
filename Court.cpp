@@ -67,7 +67,7 @@ void ballCollidedPlayer(const tBall &ball, const tPlayers &players, bool &collid
 		}
 	}
 
-	if (ball.position.x - PLAYER2X == -1 && ball.position.y - players.player2y >= 0 && ball.position.y - players.player2y < PLAYER_HEIGHT) {
+	if (ball.position.x - (PLAYER2X - 1) == -1 && ball.position.y - players.player2y >= 0 && ball.position.y - players.player2y < PLAYER_HEIGHT) {
 
 		collided = true;
 		//Calculate the part collided with
@@ -120,7 +120,7 @@ void ballCollidedWall(const tBall &ball, bool &collided) {
 	if (ball.position.y == 0) {
 		collided = true;
 	}
-	else if (ball.position.y == COURT_HEIGHT - 1) {
+	else if (ball.position.y == COURT_HEIGHT - 2) {
 		collided = true;
 	}
 }
